@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArtSight</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 900px;
+            margin-top: 50px;
+        }
+        .brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #007bff;
+            position: absolute;
+            top: 20px;
+            left: 30px;
+        }
+        h2 {
+            text-align: center;
+            color: #007bff;
+        }
+        .form-control, .form-select {
+            margin-bottom: 15px;
+        }
+        .result-container {
+            text-align: center;
+        }
+        .image-row {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .image-box {
+            flex: 1 1 45%;
+        }
+        .image-box img {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border: 1px solid #ccc;
+            padding: 5px;
+            background-color: white;
+        }
+        .btn-primary {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="brand">🎨 ArtSight</div>
+    <div class="container">
+        <h2>Upload an image to classify & apply style transfer</h2>
+        <form method="POST" action="/upload" enctype="multipart/form-data" class="shadow p-4 rounded bg-white" id="upload-form">
+            <div class="mb-3">
+                <label for="file" class="form-label">Choose image:</label>
+                <input type="file" name="file" class="form-control" id="file" {% if uploaded_image %}disabled{% endif %}>
+            </div>
+            <div class="mb-3">
+                <label for="style" class="form-label">Select style:</label>
+                <select name="style" class="form-select" id="style" required>
+                    {% for style in styles %}
+                        <option value="{{ style }}">{{ style.replace("_", " ").title() }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        
+            {% if uploaded_image %}
+                <input type="hidden" name="existing_image" id="existing_image" value="{{ uploaded_image }}">
+                <div class="mb-3">
+                    <button type="button" class="btn btn-secondary" onclick="enableImageUpload()">Change Image</button>
+                </div>
+            {% endif %}
+        
+            <button type="submit" class="btn btn-primary">
+                {% if uploaded_image %}Apply Style{% else %}Submit{% endif %}
+            </button>
+        </form>
+        
+        {% if uploaded_image %}
+        <div class="result-container mt-5">
+            <h4>Predicted Style: {{ predicted_style }}</h4>
+            <div class="image-row mt-4">
+                <div class="image-box">
+                    <h5>Uploaded Image</h5>
+                    <img src="{{ uploaded_image }}" alt="Uploaded Image">
+                </div>
+                <div class="image-box">
+                    <h5>Stylized Image</h5>
+                    <img src="{{ styled_image }}" alt="Stylized Image">
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+</body>
+<script>
+    function enableImageUpload() {
+        const fileInput = document.getElementById("file");
+        const hiddenInput = document.getElementById("existing_image");
+
+        if (fileInput && hiddenInput) {
+            fileInput.disabled = false;
+            fileInput.value = "";
+            hiddenInput.remove();
+        }
+    }
+</script>
+</html>
