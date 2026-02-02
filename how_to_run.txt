@@ -1,0 +1,92 @@
+===========================================
+Painting Style Classification & Style Transfer Web App
+===========================================
+
+Project Folder Structure:
+
+ArtSight/
+│
+├── app.py
+├── models/
+│   └── final_wikiart_model.keras
+├── static/
+│   ├── uploads/
+│   └── styled/
+├── templates/
+│   └── index.html
+├── wiki_small/
+    └── [style folders with style images]
+
+// for dataset download the zip file from drive link provided and unzip that folder in ArtSight Directory
+
+===========================================
+Step 1: Install Required Dependencies
+===========================================
+
+🔹 Optional (Recommended): Create a virtual environment
+
+Ubuntu/Linux:
+---------------
+python3 -m venv venv
+source venv/bin/activate
+
+Windows (CMD):
+---------------
+python -m venv venv
+venv\Scripts\activate
+
+🔹 Install required Python packages:
+
+pip install -r requirements.txt
+
+This will install:
+- Flask
+- TensorFlow
+- TensorFlow Hub
+- Pillow
+- NumPy
+
+
+===========================================
+Step 2: Run the Flask App
+===========================================
+
+Ubuntu/Linux:
+---------------
+python3 app.py
+
+Windows:
+---------------
+python app.py
+
+
+===========================================
+Step 3: Access in Your Browser
+===========================================
+
+After running the app, open your browser and go to the link you see in your terminal after running python3 app.py this command.
+
+
+
+You can now upload an image, choose an art style, and see:
+- The predicted style of your image
+- A new image with that style transferred onto it
+
+
+===========================================
+Notes & Requirements
+===========================================
+
+Just unzip project folder that completely follows required structure, go to that folder and then run command.
+
+===========================================
+For Any Issues
+===========================================
+
+If you face any problem, double-check:
+- Your Python version is 3.7+
+- All dependencies are installed
+- The folder structure matches the one described above
+
+Happy experimenting!
+
